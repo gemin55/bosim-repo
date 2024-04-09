@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/bootstrap.min.css') }}"
+    />
+    <link
+      rel="shortcut icon"
+      href="{{ url_for('static', filename='images/favicon.ico') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}"
+    />
+    <script src="https://kit.fontawesome.com/0c54b7787d.js"></script>
+  </head>
+  <body>
+    <header class="row">
+      <nav
+        class="navbar fixed-top navbar-expand-lg bg-danger bg-gradient navbar-dark"
+      >
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">BoMarse Boutik</a>
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarScroll"
+            aria-controls="navbarScroll"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarScroll">
+            <ul
+              class="navbar-nav me-auto my-2 my-lg-0"
+              style="--bs-scroll-height: 100px"
+            >
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="{{ url_for('views.home') }}"
+                  >Home</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="">View Books</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  id="navbarScrollingDropdown"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                  >Week 2</a
+                >
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="navbarScrollingDropdown"
+                >
+                  <li>
+                    <a class="dropdown-item" href="">Convert to cm</a>
+                  </li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><hr class="dropdown-divider" /></li>
+                  <li>
+                    <a class="dropdown-item" href="#">Something else here</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  href="{{ url_for('views.about') }}"
+                  tabindex="-1"
+                  aria-disabled="true"
+                  >About Us</a
+                >
+              </li>
+            </ul>
+            <form class="d-flex">
+              <input
+                class="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+              />
+              <button class="btn btn-outline-warning" type="submit">
+                Search
+              </button>
+
+              {% if 'userid' not in session %}
+
+              <a class="btn btn-secondary mx-1" href="">Join</a>
+              <a class="btn btn-warning mx-1" href="">LogIn</a>
+
+              {% else %}
+              <a class="btn btn-outline-warning text-white mx-1" href=""
+                >Logout</a
+              >
+              <a class="btn btn-warning mx-1" href=""> {{ session["fn"] }} </a>
+              {% endif %}
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container py-5">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      'error' %}
+      <div
+        id="msg"
+        class="alert alert-danger alert-dismissible fade show mt-3"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% else %}
+      <div
+        id="msg"
+        class="alert alert-success alert-dismissible fade show mt-3"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endif %} {% endfor %} {% endif %} {% endwith %} {% block content %} {%
+      endblock %}
+    </main>
+
+    <footer class="bg-dark text-center text-white">
+      <!-- Grid container -->
+      <div class="container p-4">
+        <!-- Section: Social media -->
+        <section class="m-5">
+          <!-- Facebook -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            href="#!"
+            role="button"
+            ><i class="fab fa-facebook-f"></i
+          ></a>
+          <!-- Twitter -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            href="#!"
+            role="button"
+            ><i class="fab fa-twitter"></i
+          ></a>
+          <!-- Linkedin -->
+          <a
+            class="btn btn-outline-light btn-floating m-1"
+            href="#!"
+            role="button"
+            ><i class="fab fa-linkedin-in"></i
+          ></a>
+        </section>
+        <!-- Section: Social media -->
+      </div>
+      <!-- Grid container -->
+      <!-- Copyright -->
+      <div class="p-5" style="background-color: rgba(0, 0, 0, 0.2)">
+        <h4>
+          &copy;2023 bomarse : : boutik
+          <span class="float-end"
+            >Like us: www.facebook.com/bomarseboutik/</span
+          >
+        </h4>
+      </div>
+      <!-- Copyright -->
+    </footer>
+
+    <script
+      type="text/javascript"
+      src="{{url_for('static', filename='js/jquery-3.7.1.js')
+}}"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.
+js"></script>
+    <script
+      type="text/javascript"
+      src="{{url_for('static', filename='js/bootstrap.min.js')
+}}"
+    ></script>
+  </body>
+</html>

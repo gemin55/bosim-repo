@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% extends "baseadmin.html" %} {% block content %}
+    <div class="row">
+      <div class="col-5">
+        <canvas id="lineChart" width="400" height="300"> </canvas>
+      </div>
+      <div class="col-5 offset-2">
+        <canvas id="barChart" width="400" height="300"> </canvas>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-5">
+        <div id="piechart_3d" style="width: 400px; height: 300px"></div>
+      </div>
+      <div class="col-5 offset-2">
+        <canvas id="dougChart" width="400" height="300"> </canvas>
+      </div>
+      <div class="col-5 offset-2">
+        <div id="chart_div" width="400" height="120"></div>
+      </div>
+    </div>
+
+    <script>
+                              var ctx = document.getElementById("lineChart").getContext("2d");
+                                          var lineChart = new Chart(ctx, {
+                                              type: "line",
+                                              data: {
+                                                      labels: {{ labels | safe }},
+                                                      datasets: [
+                                                          {
+                                                            label: 'Number of Books in Stock',
+                                                            backgroundColor: 'rgb(255, 99, 132)',
+                                                            borderColor: 'rgb(255, 99, 132)',
+                                                            pointBorderColor: 'rgb(0, 255, 190)',
+                                                            borderWidth: 3,
+                                                            data: {{ values | safe }},
+                                                            fill: false,
+                                                            lineTension: 0.1
+
+                                                             }
+                                                        ]
+                                        },
+                                        options: {
+                                          responsive: false
+
+                                        }
+                                      });
+
+
+                                      var ctx = document.getElementById("barChart").getContext("2d");
+                        var barChart = new Chart(ctx, {
+                        type: "bar",
+                        data: {
+                        labels: {{ labels1 | safe }},
+                        datasets: [
+                        {
+                        label: 'Number of Pages in book',
+                        backgroundColor: [
+                        'rgba(255, 99, 132, 0.4)',
+                        'rgba(192, 218, 45, 0.4)',
+                        'rgba(255, 205, 86, 0.4)',
+                        'rgba(75, 192, 192, 0.4)',
+                        'rgba(154, 62, 35, 0.4)',
+                        'rgba(153, 102, 255, 0.4)',
+                        'rgba(11, 213, 217, 0.4)'
+                        ],
+                        borderColor: 'rgb(192, 218, 45, 0.8)',
+                        data: {{ values1 | safe }},
+                        fill: false,
+                        lineTension: 0.1
+                        }
+                        ]
+                        },
+                        options: {
+                        responsive: false
+                        }
+                        });
+
+                  google.charts.load("current", {packages:["corechart"]});
+                  google.charts.setOnLoadCallback(drawChart);
+                  function drawChart() {
+                  var data = google.visualization.arrayToDataTable({{lsts | safe}});
+                  var options = {
+                  title: 'Number of pages in book',
+                  is3D: true,
+                  slices: {
+                    0: {offset: 0.4},
+                    2: {offset: 0.7},
+                  },
+                  };
+                  var chart = new
+                  google.visualization.PieChart(document.getElementById('piechart_3d'));
+                  chart.draw(data, options);
+                  }
+
+
+                  var barColors = [
+            "#b91d47",
+            "#00aba9",
+            "#2b5797",
+            "#e8c3b9",
+            "#1e7145"
+            ];
+            new Chart("dougChart", {
+            type: "doughnut",
+            data: {
+            labels: {{labels2 | safe}},
+            datasets: [{
+            backgroundColor: barColors,
+            data: {{values2 | safe }}
+            }]
+            },
+            options: {
+            plugins: {
+            title: {
+            display: true,
+            text: "Books classified by languages",
+            padding: {
+            top: 10,
+            bottom: 30
+            },
+            position: 'bottom'
+            } }
+            }
+            });
+
+            google.charts.load('current', {'packages':['gauge']});
+      google.charts.setOnLoadCallback(drawGaugeChart);
+      function drawGaugeChart() {
+      var data = google.visualization.arrayToDataTable({{lstsu | safe}});
+      var options = {
+      width: 400, height: 120,
+      redFrom: 90, redTo: 100,
+      yellowFrom:75, yellowTo: 90,
+      minorTicks: 5
+      };
+
+      var chart = new
+      google.visualization.Gauge(document.getElementById('chart_div'));
+      chart.draw(data, options);
+      setInterval(function() {
+      data.setValue(0, 1, 40 + Math.round(60 * Math.random()));
+      chart.draw(data, options);
+      }, 13000);
+      setInterval(function() {
+      data.setValue(1, 1, 40 + Math.round(60 * Math.random()));
+      chart.draw(data, options);
+      }, 5000);
+      setInterval(function() {
+      data.setValue(2, 1, 60 + Math.round(20 * Math.random()));
+      chart.draw(data, options);
+      }, 26000);
+      }
+    </script>
+    {% endblock %}
+  </body>
+</html>

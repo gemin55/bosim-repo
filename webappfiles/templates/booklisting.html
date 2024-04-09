@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% extends "basecust.html" %} {% block content %}
+    <form action="/reservebook/" method="post" class="mt-5">
+      <h1 class="text-center text-info mt-4">** Book Listing **</h1>
+      <hr />
+      <div class="row text-center">
+        {% for row in rows %}
+        <div class="col-md-4 pt-5">
+          <div
+            class="card mx-auto border border-2 border-gray p-2"
+            style="width: 18rem"
+          >
+            <img src="{{ row.8 }}" class="card-img-top img-fluid" />
+            <div class="card-body">
+              <h5 class="card-title text-success">{{ row.1 }}</h5>
+              <p class="card-text"><b>Price:</b> Rs. {{ row.5 }}</p>
+              <button
+                type="submit"
+                value="{{ row.0 }}"
+                name="btnsub"
+                class="btn btn-primary btn-lg"
+              >
+                Reserve Book
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </form>
+    {% endblock %}
+  </body>
+</html>

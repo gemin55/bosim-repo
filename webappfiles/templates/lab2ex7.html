@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    {% extends "basecust.html" %} {% block content %}
+
+    <form method="post" class="mt-5">
+      <h3>Convert Meter to Centimeter</h3>
+      <div class="row col-md-5 mb-5">
+        <label for="txtm" class="form-label">Meter</label>
+        <input
+          type="text"
+          class="form-control"
+          name="txtmeter"
+          id="txtm"
+          placeholder="Enter meter"
+        />
+      </div>
+      <div class="row col-md-5 mb-5">
+        <label for="txtcm" class="form-label">Centimeter</label>
+        <input
+          type="text"
+          class="form-control"
+          name="txtcentimeter"
+          id="txtcm"
+        />
+      </div>
+      <input
+        type="submit"
+        class="col-3 btn btn-primary mb-3"
+        value="Convert to CM"
+      />
+    </form>
+    {% endblock %}
+  </body>
+</html>
